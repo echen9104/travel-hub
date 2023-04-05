@@ -108,7 +108,7 @@ const Modal: React.FC<ModalProps> = ({
                 <button 
                   onClick={handleClose}
                   className="
-                    p-1 border-0 left-9
+                    p-1 border-0 right-9
                     absolute transition hover:opacity-70
                   "
                 >
@@ -148,6 +148,7 @@ const Modal: React.FC<ModalProps> = ({
                     onClick={handleSubmit}
                   />
                 </div>
+                {footer}
               </div>
             </div>
           </div>

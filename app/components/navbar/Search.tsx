@@ -40,7 +40,14 @@ const Search = () => {
                     flex flex-row items-center gap-3
                 '
             >
-                <div className='hidden sm:block hover:scale-105'>Add Guests</div>
+                <div 
+                    className='
+                        hidden sm:block hover:scale-105
+                        whitespace-nowrap
+                    '
+                >
+                    Add Guests
+                </div>
                 <div
                     className='
                         p-2 rounded-full

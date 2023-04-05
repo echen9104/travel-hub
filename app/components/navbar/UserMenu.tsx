@@ -1,11 +1,14 @@
 'use client';
 
 import { AiOutlineMenu } from 'react-icons/ai';
+import { BiGlobe } from 'react-icons/bi';
 import Avatar from '../Avatar';
 import { useState, useCallback } from 'react';
 import MenuItem from './MenuItem';
+import useRegisterModal from '@/app/hooks/useRegisterModal';
 
 const UserMenu = () => {
+    const registerModal = useRegisterModal();
     const [isOpen,setIsOpen] = useState(false); 
 
     const toggleOpen = useCallback(() => {
@@ -20,14 +23,31 @@ const UserMenu = () => {
                 <div
                     onClick={() => {}}
                     className='
-                        hidden md:block
+                        hidden lg:block
                         text-md font-semi-bold
-                        py-3 px-4 rounded-full
-                        hover:bg-neutral-100
-                        transition cursor-pointer
+                        whitespace-nowrap
                     '
                 >
-                    List your home
+                    <div className='flex flex-row'>
+                        <div 
+                            className='
+                                py-3 px-4 rounded-full
+                                hover:bg-neutral-100
+                                transition cursor-pointer
+                            '
+                        >
+                            List your home
+                        </div>
+                        <div 
+                            className='
+                                py-3 px-4 rounded-full
+                                hover:bg-neutral-100
+                                transition cursor-pointer
+                            '
+                        >
+                            <BiGlobe size={22} />
+                        </div>
+                    </div>
                 </div>
                 <div
                     onClick={toggleOpen}
@@ -51,6 +71,7 @@ const UserMenu = () => {
                 <div
                     className='
                         absolute rounded-xl shadow-md
+                        md:min-w-fit
                         w-[40vw] md:w-3/4
                         bg-white text-sm
                         right-0 top-14
@@ -63,8 +84,8 @@ const UserMenu = () => {
                                 label="Login"
                             />
                             <MenuItem 
-                                onClick={() => {}}
-                                label="Sign up"
+                                onClick={registerModal.onOpen}
+                                label="Sign Up"
                             />
                         </>
                     </div>
