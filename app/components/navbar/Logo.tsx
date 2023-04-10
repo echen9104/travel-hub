@@ -7,10 +7,12 @@ const Logo = () => {
   const router = useRouter();
 
 return (
-  <p 
+  <p
+    onClick={() => router.push('/')} 
     className="
       text-black font-bold 
       text-2xl lg:text-3xl flex
+      hover:cursor-pointer
     "
   >
     <MdTravelExplore 
