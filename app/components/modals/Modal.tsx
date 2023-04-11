@@ -13,8 +13,8 @@ interface ModalProps {
   footer?: React.ReactElement;
   actionLabel: string;
   disabled?: boolean;
-  secondaryActionLabel?: () => void;
-  secondaryAction?: string;
+  secondaryActionLabel?: string;
+  secondaryAction?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -55,12 +55,12 @@ const Modal: React.FC<ModalProps> = ({
   }, [disabled, onSubmit]);
 
   const handleSecondaryAction = useCallback(() => {
-    if (disabled || !secondaryActionLabel) {
+    if (disabled || !secondaryAction) {
       return;
     }
 
-    secondaryActionLabel();
-  }, [disabled, secondaryActionLabel]);
+    secondaryAction();
+  }, [disabled, secondaryAction]);
 
   if (!isOpen) {
     return null;

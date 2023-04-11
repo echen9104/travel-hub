@@ -9,9 +9,10 @@ import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
 import { signOut } from 'next-auth/react';
 import { SafeUser } from '@/app/types';
+import useRentModal from '@/app/hooks/useRentModal';
 
 interface UserMenuProps {
-	currentUser: SafeUser | null;
+	currentUser: SafeUser | null | undefined;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({
@@ -19,12 +20,22 @@ const UserMenu: React.FC<UserMenuProps> = ({
 }) => {
 	const registerModal = useRegisterModal();
 	const loginModal = useLoginModal();
+	const rentModal = useRentModal();
 	const [isOpen,setIsOpen] = useState(false); 
 
 	const toggleOpen = useCallback(() => {
 		setIsOpen((value) => !value)
 		console.log(isOpen)
 	}, []);
+
+	const onRent = useCallback(() => {
+		if (!currentUser) {
+			return loginModal.onOpen();
+		}
+
+		// open the rent modal
+		rentModal.onOpen();
+	}, [loginModal, currentUser]);
 
 	return (
 			<div className='relative'>
@@ -37,26 +48,27 @@ const UserMenu: React.FC<UserMenuProps> = ({
 											whitespace-nowrap
 									'
 							>
-									<div className='flex flex-row'>
-											<div 
-													className='
-															py-3 px-4 rounded-full
-															hover:bg-neutral-100
-															transition cursor-pointer
-													'
-											>
-													List your home
-											</div>
-											<div 
-													className='
-															py-3 px-4 rounded-full
-															hover:bg-neutral-100
-															transition cursor-pointer
-													'
-											>
-													<BiGlobe size={22} />
-											</div>
+								<div className='flex flex-row'>
+									<div
+										onClick={onRent} 
+										className='
+											py-3 px-4 rounded-full
+											hover:bg-neutral-100
+											transition cursor-pointer
+										'
+									>
+											List your home
 									</div>
+									<div 
+										className='
+											py-3 px-4 rounded-full
+											hover:bg-neutral-100
+											transition cursor-pointer
+										'
+									>
+										<BiGlobe size={22} />
+									</div>
+								</div>
 							</div>
 							<div
 									onClick={toggleOpen}
@@ -102,7 +114,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
 													label="My properties"
 												/>
 												<MenuItem 
-													onClick={() => {}}
+													onClick={rentModal.onOpen}
 													label="List my home"
 												/>
 												<hr />
