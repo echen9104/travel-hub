@@ -2,31 +2,33 @@ import EmptyState from "../components/EmptyState";
 import ClientOnly from "../components/ClientOnly";
 import getCurrentUser from "../actions/getCurrentUser";
 import getReservations from "../actions/getReservations";
+import PropertiesClient from "./PropertiesClient";
+import getListings from "../actions/getListings";
 
-const ReservationsPage = async () => {
+const PropertiesPage = async () => {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
     return (
       <ClientOnly>
-        <EmptyState
+        <EmptyState 
           title="Unauthorized"
-          subtitle="Plase log in."
+          subtitle="Please log in."
         />
       </ClientOnly>
     )
   }
 
-  const reservations = await getReservations({
-    authorId: currentUser.id
-  });
+  const listings = await getListings({
+    userId: currentUser.id
+  })
 
-  if (reservations.length == 0) {
+  if (listings.length == 0) {
     return (
       <ClientOnly>
         <EmptyState
-          title="No reservations found"
-          subtitle="Looks like you have no reservations on your propoerties."
+          title="No properties found"
+          subtitle="You haven't listing any properties yet."
         />
       </ClientOnly>
     )
@@ -34,12 +36,12 @@ const ReservationsPage = async () => {
 
   return (
     <ClientOnly>
-      <ReservationsClient
-        reservations={reservations}
+      <PropertiesClient
+        listings={listings}
         currentUser={currentUser}
       />
     </ClientOnly>
   )
-};
+}
 
-export default ReservationsPage;
+export default PropertiesPage;
